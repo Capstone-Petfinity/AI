@@ -1,7 +1,6 @@
 from flask import Flask, render_template
 from PIL import Image
 import os
-from flask import Flask
 
 app = Flask(__name__)
 
