@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, jsonify
+from flask_cors import CORS
 from PIL import Image
 import os
 import io
@@ -6,9 +7,11 @@ import base64
 
 app = Flask(__name__)
 
+CORS(app)  # 모든 도메인에 대해 CORS 허용
+
 @app.route('/hello')
 def hello():
-    return 'Hello, World!'
+    return jsonify(message="Hello, World!")
 
 @app.route('/formdata_test')
 def formdata_test():
