@@ -8,4 +8,4 @@ def hello():
 
 if __name__ == '__main__':
     # Flask 애플리케이션을 0.0.0.0 호스트와 20002 포트로 실행
-    app.run(host='0.0.0.0', port=20002)
+    app.run(host='0.0.0.0', port=5000)
