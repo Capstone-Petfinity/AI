@@ -23,7 +23,7 @@ def formdata_test():
         disease = request.form.get('disease')
         img = request.files.get('img')
                     
-        img=Image.open(img.stream)
+        img=Image.open("./BBong.jpg")
         img=img.resize(640,640)
         
             
