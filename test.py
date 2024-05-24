@@ -19,7 +19,7 @@ def formdata_test():
         
         user_type = request.form.get('user_type')
         disease_area = request.form.get('disease_area')
-        type = request.files.get('type')
+        type = request.form.get('type')
         disease = request.form.get('disease')
         img = request.files.get('img')
                     
