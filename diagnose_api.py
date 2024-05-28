@@ -60,10 +60,10 @@ VD_model_path = {
 chest_model_path = {"ch02": "./yolo_models/chest/ch02(segmentation).pt"}
 
 
-@app.route("/ai_diagnose", methods=["POST"])
+@app.route("/diagnosis", methods=["POST"])
 def diagnose():
     data = request.get_json()
-    image_url = data.get("image_url")
+    image_url = data.get("img_url")
     response = requests.get(image_url)
 
     if response.status_code == 200:
@@ -134,11 +134,18 @@ def diagnose():
     response_data = response.json()
     insert_id = response_data.get("insertId")
 
+    if detected_disease_name == "결막염/비궤양각막질환":
+        content = "결막염은 눈이 충혈되고 눈꼽이 나는 것이 특징입니다. 비궤양각막질환은 눈꼽은 없으나 충혈이 되는 경우가 있으며 시력이 저하될 수 있습니다."
+    
+    else:
+        content = None
+        
     diagnose_result = {
         "user_uuid": str(user_uuid),
         "disease_name": detected_disease_name,
         "percent": str(confidence),
         "insert_id": str(insert_id),
+        "content" : content
     }
 
     return jsonify(diagnose_result)
