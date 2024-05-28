@@ -1,61 +1,72 @@
-from flask import Flask, render_template, request, jsonify
-from PIL import Image
-import os
 from ultralytics import YOLO
-import torch
-import io
-import base64
+from PIL import Image
+import cv2 
+import matplotlib.pyplot as plt
+from PIL import Image, ImageDraw, ImageFont
 
-app = Flask(__name__)
+def add_text_to_image(image, text, position=(10, 10), font_size=10):
+    draw = ImageDraw.Draw(image)
+    font = ImageFont.truetype("./godic.ttf", font_size)  
+    draw.text(position, text, fill="red", font=font)
+    return image
 
-@app.route('/hello')
-def hello():
-    return 'Hello, World!'
-
-@app.route('/diagnose_ai', methods=['POST', 'GET'])
-def diagnose_ai():
-    if (request.method == 'POST'):
-        
-        #user_type = request.form.get('user_type')
-        disease_area = request.form.get('disease_area')
-        type = request.files.get('type')
-        disease = request.form.get('disease')
-        img = request.files.get('img')
-                    
-        img=Image.open(img.stream)
-        img=img.resize(640,640)
-        
-        model_name="{:s}_{:s}_{:s}.pt".format(disease_area,type,disease)
-        
-        if(os.path.isfile("./yolo_models/"+model_name)):
-            model=YOLO("./yolo_models/"+model_name)
-            results = model(img)
-            res_plotted = results[0].plot()
-            
-            cls_name=None
-            
-            if results[0].masks is not None:
-                for counter, _ in enumerate(results[0].masks.data):
-                    cls_id = int(results[0].boxes[counter].cls.item())
-                    cls_name = model.names[cls_id]
-            
-        result_img = io.BytesIO()
-        res_plotted.save(result_img, 'PNG')
-        result_img.seek(0)
-
-        img_base64 = base64.b64encode(result_img.getvalue()).decode('utf-8')
-        
-        response = {
-            'image': img_base64,
-            'info': cls_name
-        }
-        
-        return jsonify(response)
+def yolo_detection_inference(img, model):
     
-    else :
-        return "No FormData"
-        
-if __name__ == '__main__':
-    # Flask 애플리케이션을 0.0.0.0 호스트와 5000 포트로 실행
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    custom_labels={0: '정상', 1: '슬개골 탈구'}
+    
+    results = model(img)
+    res_plotted = results[0].plot()
+    
+    disease_name='정상'
+    
+    for i, box in enumerate(results[0].boxes):
+        class_id = int(box.cls)  # 클래스 ID 가져오기
+        if class_id in custom_labels:
+            results[0].names[class_id] = custom_labels[class_id]
+            
+            if class_id ==1:
+                disease_name = '슬개골 탈구'
+                
+    res_plotted = results[0].plot()
+    confidence=None
+    
+    return res_plotted, disease_name, confidence
+
+def yolo_segmentation_inference(img, model):
+    
+    custom_labels={0: '정상', 1: '기관 허탈'}
+    disease_name = '정상'
+    
+    results = model(img)
+    
+    for i, box in enumerate(results[0].boxes):
+        class_id = int(box.cls)  # 클래스 ID 가져오기
+        if class_id in custom_labels:
+            
+            results[0].names[class_id] = custom_labels[class_id]
+            
+            if class_id ==1:
+                disease_name = '기관 허탈'
+    
+    res_plotted = results[0].plot()
+    confidence=None
+    
+    return res_plotted, disease_name, confidence
+
+def yolo_classification_inference(img, model):
+    
+    custom_labels={0: '정상', 1: '색소침착성각막염', 2: '결막염/비궤양각막질환', 3: '궤양성각막질환', 4: '백내장'}
+    results = model(img)
+    
+    confidence = results[0].probs.data.max.item()  # 가장 높은 컨피던스 값
+    class_id = results[0].probs.data.argmax().item()  # 가장 높은 컨피던스를 가진 클래스 ID
+    disease_name = custom_labels[class_id]
+    
+    res_plotted= add_text_to_image(img, f"{disease_name} ({confidence:.2f})")
+    
+    return res_plotted, disease_name, confidence
+    
+    
+
+
 
