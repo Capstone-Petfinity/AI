@@ -9,6 +9,7 @@ from yolo_diagnose import (
 )
 from torch_classification_diagnose import efficientnet_inference
 from torch_detection_diagnose import fasterrcnn_inference
+from skin_diagnose import skin_classification_inference
 import logging
 
 app = Flask(__name__)
@@ -92,6 +93,8 @@ def diagnose():
     # 모델 선택 로직
     if disease == "ch02":
         model_path = chest_model_path.get(disease)
+    elif disease_area == "skin":
+        model_path = "./torch_models/skin/skin.pth"
     elif disease_area == "eye":
         model_path = eye_model_path.get(type)
     elif disease_area == "chest":
@@ -112,6 +115,10 @@ def diagnose():
     if "efficientv2" in model_path:
         res_plotted, detected_disease_name, confidence = efficientnet_inference(
             img_path, model_path, disease_name
+        )
+    elif "skin" in model_path:
+        res_plotted, detected_disease_name, confidence = skin_classification_inference(
+            img_path, model_path
         )
     elif "fasterRCNN" in model_path:
         res_plotted, detected_disease_name, confidence = fasterrcnn_inference(
