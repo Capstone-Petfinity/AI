@@ -9,7 +9,7 @@ from yolo_diagnose import (
 )
 from torch_classification_diagnose import efficientnet_inference
 from torch_detection_diagnose import fasterrcnn_inference
-
+import logging
 
 app = Flask(__name__)
 
@@ -63,10 +63,15 @@ chest_model_path = {"ch02": "./yolo_models/chest/ch02(segmentation).pt"}
 
 @app.route("/diagnosis", methods=["POST"])
 def diagnose():
+    
+    logging.info("====================Start====================")
+    
     data = request.get_json()
     image_url = data.get("img_url")
     response = requests.get(image_url)
-
+    
+    logging.info(f"Request data: {data}")
+    
     if response.status_code == 200:
         image = Image.open(BytesIO(response.content))
         image = image.resize((640, 640))
@@ -80,6 +85,8 @@ def diagnose():
     position = data.get("position")
     disease = data.get("disease")
 
+    logging.info(f"user_uuid: {user_uuid}, disease_area: {disease_area}, type: {type}, position: {position}, disease: {disease}")
+    
     disease_name = disease_dic.get(disease)
 
     # 모델 선택 로직
@@ -97,6 +104,7 @@ def diagnose():
         model_path = "./yolo_models/skeletal/mu05(detection).pt"
 
     if not model_path:
+        
         return "No model found for the given parameters", 400
 
     # task 결정 및 함수 호출
@@ -149,6 +157,8 @@ def diagnose():
         "content" : content
     }
 
+    logging.info(f"Result data: {diagnose_result}")
+    
     return jsonify(diagnose_result)
 
 
