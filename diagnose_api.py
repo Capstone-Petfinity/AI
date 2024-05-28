@@ -76,6 +76,7 @@ def diagnose():
     if response.status_code == 200:
         image = Image.open(BytesIO(response.content))
         image = image.resize((640, 640))
+        image = image.convert('RGB')
         image.save("./requested_image.jpg", format="JPEG")
     else:
         return "No URL", 400
