@@ -79,6 +79,7 @@ def diagnose():
         image = image.convert('RGB')
         image.save("./requested_image.jpg", format="JPEG")
     else:
+        logging.info("NO URL")
         return "No URL", 400
 
     user_uuid = data.get("user_uuid")
