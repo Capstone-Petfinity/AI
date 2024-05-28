@@ -2,13 +2,14 @@ from flask import Flask, jsonify, request
 import requests
 from io import BytesIO
 from PIL import Image
-from .yolo_diagnose import (
+from yolo_diagnose import (
     yolo_detection_inference,
     yolo_segmentation_inference,
     yolo_classification_inference,
 )
-from .torch_classification_diagnose import efficientnet_inference
-from .torch_detection_diagnose import fasterrcnn_inference
+from torch_classification_diagnose import efficientnet_inference
+from torch_detection_diagnose import fasterrcnn_inference
+
 
 app = Flask(__name__)
 
