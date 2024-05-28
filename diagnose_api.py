@@ -62,7 +62,8 @@ chest_model_path = {"ch02": "./yolo_models/chest/ch02(segmentation).pt"}
 
 @app.route("/ai_diagnose", methods=["POST"])
 def diagnose():
-    image_url = request.form.get("image_url")
+    data = request.get_json()
+    image_url = data.get("image_url")
     response = requests.get(image_url)
 
     if response.status_code == 200:
@@ -70,13 +71,13 @@ def diagnose():
         image = image.resize((640, 640))
         image.save("./requested_image.jpg", format="JPEG")
     else:
-        return "No URL"
+        return "No URL", 400
 
-    user_uuid = request.form.get("user_uuid")
-    disease_area = request.form.get("disease_area")
-    type = request.form.get("type")
-    position = request.form.get("position")
-    disease = request.form.get("disease")
+    user_uuid = data.get("user_uuid")
+    disease_area = data.get("disease_area")
+    type = data.get("type")
+    position = data.get("position")
+    disease = data.get("disease")
 
     disease_name = disease_dic.get(disease)
 
