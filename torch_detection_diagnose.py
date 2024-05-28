@@ -1,8 +1,5 @@
-import random
 import pandas as pd
 import numpy as np
-import os
-import glob
 import cv2
 from PIL import Image, ImageDraw, ImageFont
 import torch
