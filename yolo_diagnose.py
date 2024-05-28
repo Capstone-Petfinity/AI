@@ -59,8 +59,8 @@ def yolo_classification_inference(img, model):
     model=YOLO(model)
     results = model(img)
     
-    confidence = results[0].probs.data.max.item()  # 가장 높은 컨피던스 값
-    class_id = results[0].probs.data.argmax().item()  # 가장 높은 컨피던스를 가진 클래스 ID
+    confidence = results[0].probs.top1conf.item()  
+    class_id = results[0].probs.top1  
     disease_name = custom_labels[class_id]
     
     res_plotted= add_text_to_image(img, f"{disease_name} ({confidence:.2f})")
