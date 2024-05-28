@@ -156,7 +156,10 @@ def diagnose():
     
     else:
         content = None
-        
+    
+    confidence=confidence*10
+    confidence=round(confidence,2)
+    
     diagnose_result = {
         "user_uuid": str(user_uuid),
         "disease_name": detected_disease_name,
