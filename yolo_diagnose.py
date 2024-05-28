@@ -1,5 +1,5 @@
 from ultralytics import YOLO
-from PIL import  ImageDraw, ImageFont
+from PIL import  Image,ImageDraw, ImageFont
 
 def add_text_to_image(image, text, position=(10, 10), font_size=10):
     draw = ImageDraw.Draw(image)
@@ -63,7 +63,9 @@ def yolo_classification_inference(img, model):
     class_id = results[0].probs.top1  
     disease_name = custom_labels[class_id]
     
-    res_plotted= add_text_to_image(img, f"{disease_name} ({confidence:.2f})")
+    image=Image.open(img)
+    
+    res_plotted= add_text_to_image(image, f"{disease_name} ({confidence:.2f})")
     
     return res_plotted, disease_name, confidence
     
