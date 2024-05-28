@@ -157,7 +157,7 @@ def diagnose():
     else:
         content = None
     
-    confidence=confidence*10
+    confidence=confidence*100
     confidence=round(confidence,2)
     
     diagnose_result = {
