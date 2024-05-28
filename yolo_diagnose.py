@@ -14,6 +14,7 @@ def yolo_detection_inference(img, model):
     
     custom_labels={0: '정상', 1: '슬개골 탈구'}
     
+    model=YOLO(model)
     results = model(img)
     res_plotted = results[0].plot()
     
