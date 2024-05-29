@@ -12,7 +12,10 @@ def yolo_detection_inference(img, model):
     custom_labels={0: '정상', 1: '슬개골 탈구'}
     
     model=YOLO(model)
+    
+    img=Image.open(img)
     results = model(img)
+    
     res_plotted = results[0].plot()
     
     disease_name='정상'
@@ -35,7 +38,9 @@ def yolo_segmentation_inference(img, model):
     custom_labels={0: '정상', 1: '기관 허탈'}
     disease_name = '정상'
     
+    img=Image.open(img)
     model=YOLO(model)
+    
     results = model(img)
     
     for i, box in enumerate(results[0].boxes):
@@ -56,7 +61,9 @@ def yolo_classification_inference(img, model):
     
     custom_labels={0: '정상', 1: '색소침착성각막염', 2: '결막염/비궤양각막질환', 3: '궤양성각막질환', 4: '백내장'}
     
+    img=Image.open(img)
     model=YOLO(model)
+    
     results = model(img)
     
     confidence = results[0].probs.top1conf.item()  
@@ -64,7 +71,6 @@ def yolo_classification_inference(img, model):
     disease_name = custom_labels[class_id]
     
     image=Image.open(img)
-    
     res_plotted= add_text_to_image(image, f"{disease_name} ({confidence:.2f})")
     
     return res_plotted, disease_name, confidence
