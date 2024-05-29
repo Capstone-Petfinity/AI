@@ -98,5 +98,7 @@ def efficientnet_inference(img_path, model_path, disease):
 
     image = Image.open(img_path)
     res_plotted = add_text_to_image(image, f"{disease_name} ({confidence:.2f})")
-
+    
+    res_plotted = Image.fromarray(res_plotted)
+    # np.array가 save 안된다길래 추가해봄
     return res_plotted, disease_name, confidence

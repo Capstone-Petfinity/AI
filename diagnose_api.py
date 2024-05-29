@@ -174,8 +174,6 @@ def diagnose():
         content = skin_content_dic[detected_disease_name]
     
     
-    
-    
     confidence=confidence*100
     confidence=round(confidence,2)
     
