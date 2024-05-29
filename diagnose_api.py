@@ -173,9 +173,12 @@ def diagnose():
     elif disease_area == "skin":
         content = skin_content_dic[detected_disease_name]
     
-    
-    confidence=confidence*100
-    confidence=round(confidence,2)
+    if confidence == None:
+        confidence = None
+    else:
+        confidence=confidence*100
+        confidence=round(confidence,2)
+
     
     diagnose_result = {
         "user_uuid": str(user_uuid),
