@@ -84,7 +84,9 @@ def efficientnet_inference(img_path, model_path, disease):
     test_dataset = CustomDataset(img_path, None, test_transform)
     test_loader = DataLoader(test_dataset, batch_size=1, shuffle=False, num_workers=0)
 
-    model = torch.load(model_path)
+    model = BaseModel(num_classes=2)  # BaseModel을 인스턴스화
+    model.load_state_dict(torch.load(model_path, map_location=device))
+    model = model.to(device) 
     model.eval()
 
     with torch.no_grad():
@@ -98,7 +100,6 @@ def efficientnet_inference(img_path, model_path, disease):
     
     image = Image.open(img_path)
     res_plotted = add_text_to_image(image, f"{disease_name} ({confidence:.2f})")
-    
     
     # np.array가 save 안된다길래 추가해봄
     return res_plotted, disease_name, confidence

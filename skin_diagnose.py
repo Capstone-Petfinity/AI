@@ -23,7 +23,6 @@ disease_name = {
     } 
 
 
-
 def skin_classification_inference(img_path, model_path):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
