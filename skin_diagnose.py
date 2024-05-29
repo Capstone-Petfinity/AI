@@ -13,14 +13,16 @@ def add_text_to_image(image, text, position=(10, 10), font_size=10):
     return image
 
 disease_name = {
-        0: "구진플라크",
-        1: "비듬각질상피성잔고리",
-        2: "태선화과다색소침착",
-        3: "농포여드름",
-        4: "미란궤양",
-        5: "결절종괴",
+        0: "구진(플라크)",
+        1: "비듬/각질/상피성잔고리",
+        2: "태선화 과다색소침착",
+        3: "농포(여드름)",
+        4: "궤양/미란",
+        5: "결절(종괴)",
         6: "정상",
     } 
+
+
 
 def skin_classification_inference(img_path, model_path):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
