@@ -1,5 +1,6 @@
 from ultralytics import YOLO
 from PIL import  Image,ImageDraw, ImageFont
+import cv2
 
 def add_text_to_image(image, text, position=(10, 10), font_size=10):
     draw = ImageDraw.Draw(image)
@@ -29,6 +30,7 @@ def yolo_detection_inference(img, model):
                 disease_name = '슬개골 탈구'
                 
     res_plotted = results[0].plot()
+    res_plotted = Image.fromarray(cv2.cvtColor(res_plotted, cv2.COLOR_BGR2RGB))
     confidence=None
     
     return res_plotted, disease_name, confidence
@@ -53,6 +55,7 @@ def yolo_segmentation_inference(img, model):
                 disease_name = '기관 허탈'
     
     res_plotted = results[0].plot()
+    res_plotted = Image.fromarray(cv2.cvtColor(res_plotted, cv2.COLOR_BGR2RGB))
     confidence=None
     
     return res_plotted, disease_name, confidence
