@@ -79,7 +79,7 @@ def add_text_to_image(image, text, position=(10, 10), font_size=10):
 
 def efficientnet_inference(img_path, model_path, disease):
     
-    custom_labels = {0: "정상", 1: disease}
+    custom_labels = {0: disease, 1: "정상"}
 
     test_dataset = CustomDataset(img_path, None, test_transform)
     test_loader = DataLoader(test_dataset, batch_size=1, shuffle=False, num_workers=0)
