@@ -61,7 +61,8 @@ VD_model_path = {
     "ab09": "./torch_models/stomach/VD/ab09(efficientv2).pt",
 }
 
-chest_model_path = {"ch02": "./yolo_models/chest/ch02(segmentation).pt"}
+chest_model_path = {"ch02": "./yolo_models/chest/ch02(segmentation).pt",
+                    "ch03": "./yolo_models/chest/ch03(segmentation).pt"}
 
 skin_content_dic={"구진(플라크)":"구진이란 염증성 여드름 병변과 비염증성 여드름 병변의 중간 형태이며 피부의 단단한 덩어리로 직경은 0.5cm ~ 1cm 정도 입니다. 작고 딱딱한 붉은 색의 병변이나 안에 고름은 잡히지 않은 상태로 나타납니다.",
         "비듬/각질/상피성잔고리": "비듬/각질은 피부 표피에서 건조하고 얇은 형태로 나타나는 표피세포로 생명력이 없는 죽은 세포입니다. 농포나 수포가 파열된 후 나타나는 원형으로 나열된 비듬/각질을 상피성잔고리라고 부릅니다.",
