@@ -116,7 +116,7 @@ def diagnose():
     elif disease_area == "eye":
         model_path = eye_model_path.get(type)
     elif disease_area == "chest":
-        if position == "Lateral":
+        if position == ("Lateral" or "stomach"):
             model_path = Lateral_model_path.get(disease)
         elif position == "VD":
             model_path = VD_model_path.get(disease)
