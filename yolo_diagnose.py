@@ -58,9 +58,12 @@ def yolo_segmentation_inference(img, model, disease):
     
     return res_plotted, disease_name, confidence
 
-def yolo_classification_inference(img, model):
+def yolo_classification_inference(img, model, US):
     
-    custom_labels={0: '정상', 1: '색소침착성각막염', 2: '결막염/비궤양각막질환', 3: '궤양성각막질환', 4: '백내장'}
+    if US == 1:
+        custom_labels={0: '정상', 1: '색소침착성각막염', 2: '결막염/비궤양각막질환', 3: '궤양성각막질환', 4: '백내장'}
+    else:
+        custom_labels={0: '정상', 1: '백내장', 2: '유리체변성'}
     
     model=YOLO(model)
     

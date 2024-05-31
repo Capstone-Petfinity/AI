@@ -152,7 +152,7 @@ def diagnose():
         )
     elif "classification" in model_path:
         res_plotted, detected_disease_name, confidence = yolo_classification_inference(
-            img_path, model_path
+            img_path, model_path, (type=='US')
         )
 
     res_plotted.save("./result_image.jpg", format="JPEG")
