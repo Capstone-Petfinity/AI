@@ -27,10 +27,11 @@ def yolo_detection_inference(img, model):
             
             if class_id ==1:
                 disease_name = '슬개골 탈구'
-                
+    
+    confidence=(sum(results[0].boxes.conf)/len(results[0].boxes.conf)).item()
     res_plotted = results[0].plot()
     res_plotted = Image.fromarray(cv2.cvtColor(res_plotted, cv2.COLOR_BGR2RGB))
-    confidence=None
+    #confidence=None
     
     return res_plotted, disease_name, confidence
 
