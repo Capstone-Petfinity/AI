@@ -109,13 +109,13 @@ def diagnose():
     disease_name = disease_dic.get(disease)
 
     # 모델 선택 로직
-    if disease == ("ch02" or "ch03"):
+    if disease == "ch02" or disease == "ch03":
         model_path = chest_model_path.get(disease)
     elif disease_area == "skin":
         model_path = "./torch_models/skin/skin.pth"
     elif disease_area == "eye":
         model_path = eye_model_path.get(type)
-    elif disease_area == ("chest" or "stomach"):
+    elif disease_area == "chest" or disease == "stomach":
         if position == "Lateral"  :
             model_path = Lateral_model_path.get(disease)
         elif position == "VD":
@@ -148,7 +148,7 @@ def diagnose():
         )
     elif "segmentation" in model_path:
         res_plotted, detected_disease_name, confidence = yolo_segmentation_inference(
-            img_path, model_path
+            img_path, model_path, disease_name
         )
     elif "classification" in model_path:
         res_plotted, detected_disease_name, confidence = yolo_classification_inference(

@@ -34,9 +34,9 @@ def yolo_detection_inference(img, model):
     
     return res_plotted, disease_name, confidence
 
-def yolo_segmentation_inference(img, model):
+def yolo_segmentation_inference(img, model, disease):
     
-    custom_labels={0: '정상', 1: '기관 허탈'}
+    custom_labels={0: '정상', 1: disease}
     disease_name = '정상'
     
     model=YOLO(model)
@@ -50,7 +50,7 @@ def yolo_segmentation_inference(img, model):
             results[0].names[class_id] = custom_labels[class_id]
             
             if class_id ==1:
-                disease_name = '기관 허탈'
+                disease_name = custom_labels[1]
     
     res_plotted = results[0].plot()
     res_plotted = Image.fromarray(cv2.cvtColor(res_plotted, cv2.COLOR_BGR2RGB))
