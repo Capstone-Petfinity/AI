@@ -109,7 +109,7 @@ def diagnose():
     disease_name = disease_dic.get(disease)
 
     # 모델 선택 로직
-    if disease == "ch02":
+    if disease == ("ch02" or "ch03"):
         model_path = chest_model_path.get(disease)
     elif disease_area == "skin":
         model_path = "./torch_models/skin/skin.pth"
