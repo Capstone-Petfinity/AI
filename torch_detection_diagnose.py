@@ -109,13 +109,13 @@ def fasterrcnn_inference(img_path,model_path):
     model.eval()
 
     
+    res_plotted = Image.open(img_path).convert("RGB")
+    res_plotted=res_plotted.resize((640,640), Image.Resampling.BILINEAR)
     boxes=inference(model, test_loader, device, threshold=0.6)
     
     if (boxes == None):
         disease_name = "정상"
         confidence = None
-        res_plotted = Image.open(img_path).convert("RGB")
-        res_plotted=res_plotted.resize((640,640), Image.Resampling.BILINEAR)
     
     else:
         disease_name = "결석"
