@@ -139,7 +139,7 @@ def diagnose():
         res_plotted, detected_disease_name, confidence = skin_classification_inference(
             img_path, model_path
         )
-    elif "fasterRCNN" in model_path:
+    elif "FasterRCNN" in model_path:
         res_plotted, detected_disease_name, confidence = fasterrcnn_inference(
             img_path, model_path
         )
