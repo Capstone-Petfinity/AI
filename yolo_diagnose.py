@@ -63,7 +63,7 @@ def yolo_classification_inference(img, model, US):
     if US == 1:
         custom_labels={0: '정상', 1: '백내장', 2: '유리체변성'}
     else:
-        custom_labels={0: '정상', 1: '색소침착성각막염', 2: '결막염/비궤양각막질환', 3: '궤양성각막질환', 4: '백내장'}
+        custom_labels={0: '정상', 1: '색소침착성각막염', 2: '결막염/비궤양성각막질환', 3: '궤양성각막질환', 4: '백내장'}
     
     model=YOLO(model)
     
