@@ -115,7 +115,7 @@ def diagnose():
         model_path = "./torch_models/skin/skin.pth"
     elif disease_area == "eye":
         model_path = eye_model_path.get(type)
-    elif disease_area == "chest" or disease == "stomach":
+    elif disease_area == "chest" or disease_area == "stomach":
         if position == "Lateral"  :
             model_path = Lateral_model_path.get(disease)
         elif position == "VD":
