@@ -31,7 +31,6 @@ def yolo_detection_inference(img, model):
     confidence=(sum(results[0].boxes.conf)/len(results[0].boxes.conf)).item()
     res_plotted = results[0].plot()
     res_plotted = Image.fromarray(cv2.cvtColor(res_plotted, cv2.COLOR_BGR2RGB))
-    #confidence=None
     
     return res_plotted, disease_name, confidence
 
@@ -55,7 +54,7 @@ def yolo_segmentation_inference(img, model, disease):
     
     res_plotted = results[0].plot()
     res_plotted = Image.fromarray(cv2.cvtColor(res_plotted, cv2.COLOR_BGR2RGB))
-    confidence=None
+    confidence=results[0].boxes.conf.item()
     
     return res_plotted, disease_name, confidence
 
