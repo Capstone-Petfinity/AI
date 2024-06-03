@@ -22,7 +22,7 @@ class CustomDataset(Dataset):
     def __getitem__(self, idx):
         img_path = self.imgs[idx]
         img = cv2.imread(self.imgs[idx])
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB).astype(np.int32)
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB).astype(np.float32)
         img /= 255.0
         height, width = img.shape[0], img.shape[1]
 
@@ -108,25 +108,20 @@ def fasterrcnn_inference(img_path,model_path):
     model=torch.load(model_path)
     model.eval()
 
-    with torch.no_grad():
-        for imgs in tqdm(iter(test_loader)):
-            imgs = imgs.to(device)
-            model=model.to(device)
-            pred = model(imgs)
     
     boxes=inference(model, test_loader, device, threshold=0.6)
     
     if (boxes == None):
         disease_name = "정상"
         confidence = None
-        res_plotted = Image.open(img_path)
-        res_plotted.resize(640,640)
+        res_plotted = Image.open(img_path).convert("RGB")
+        res_plotted=res_plotted.resize((640,640), Image.Resampling.BILINEAR)
     
     else:
         disease_name = "결석"
         confidence = sum([i[-1] for i in boxes])/len(boxes)
         res_plotted = Image.open(img_path).convert("RGB")
-        res_plotted.resize(640,640)
+        res_plotted=res_plotted.resize((640,640), Image.Resampling.BILINEAR)
         draw = ImageDraw.Draw(res_plotted)
         
         for box in boxes:
