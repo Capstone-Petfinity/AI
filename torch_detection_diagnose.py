@@ -13,6 +13,7 @@ from albumentations.pytorch.transforms import ToTensorV2
 from tqdm.auto import tqdm
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+#device=torch.device("cpu")
 class CustomDataset(Dataset):
     def __init__(self, img_path,transforms=None):
         self.transforms = transforms
@@ -121,7 +122,6 @@ def fasterrcnn_inference(img_path,model_path):
         disease_name = "결석"
         confidence = sum([i[-1] for i in boxes])/len(boxes)
         res_plotted = Image.open(img_path).convert("RGB")
-        #
         draw = ImageDraw.Draw(res_plotted)
         
         for box in boxes:
