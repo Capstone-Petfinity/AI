@@ -134,36 +134,37 @@ def diagnose():
     # task 결정 및 함수 호출
     img_path = "./requested_image.jpg"
     if "efficientv2" in model_path:
+        logging.info("efficientnet_inference returned !")
         res_plotted, detected_disease_name, confidence = efficientnet_inference(
             img_path, model_path, disease_name
         )
-        logging.info("efficientnet_inference returned !")
     elif "skin" in model_path:
+        logging.info("skin_classification_inference returned !")
         res_plotted, detected_disease_name, confidence = skin_classification_inference(
             img_path, model_path
         )
-        logging.info("skin_classification_inference returned !")
     elif "FasterRCNN" in model_path:
+        logging.info("fasterrcnn_inference returned !")
         res_plotted, detected_disease_name, confidence = fasterrcnn_inference(
             img_path, model_path
         )
-        logging.info("fasterrcnn_inference returned !")
         
     elif "detection" in model_path:
+        logging.info("yolo_detection_inference returned !")
         res_plotted, detected_disease_name, confidence = yolo_detection_inference(
             img_path, model_path
         )
-        logging.info("yolo_detection_inference returned !")
     elif "segmentation" in model_path:
+        logging.info("yolo_segmentation_inference returned !")
         res_plotted, detected_disease_name, confidence = yolo_segmentation_inference(
             img_path, model_path, disease_name
         )
-        logging.info("yolo_segmentation_inference returned !")
     elif "classification" in model_path:
+        
+        logging.info("yolo_classification_inference returned !")
         res_plotted, detected_disease_name, confidence = yolo_classification_inference(
             img_path, model_path, (type=='US')
         )
-        logging.info("yolo_classification_inference returned !")
     else:
         logging.info("Check Your Algorithm !")
         
