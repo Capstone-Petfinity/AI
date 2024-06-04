@@ -18,7 +18,6 @@ warnings.filterwarnings(action="ignore")
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-
 class BaseModel(nn.Module):
     def __init__(self, num_classes=2):
         super(BaseModel, self).__init__()
@@ -85,7 +84,7 @@ def efficientnet_inference(img_path, model_path, disease):
     test_loader = DataLoader(test_dataset, batch_size=1, shuffle=False, num_workers=0)
 
     model = BaseModel(num_classes=2)  # BaseModel을 인스턴스화
-    model.load_state_dict(torch.load(model_path))
+    model.load_state_dict(torch.load(model_path),map_location=device)
     model.eval()
 
     with torch.no_grad():

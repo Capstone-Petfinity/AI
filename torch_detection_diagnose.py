@@ -12,7 +12,7 @@ import albumentations as A
 from albumentations.pytorch.transforms import ToTensorV2
 from tqdm.auto import tqdm
 
-device = torch.device('cuda:1') if torch.cuda.is_available() else torch.device('cpu')
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 class CustomDataset(Dataset):
     def __init__(self, img_path,transforms=None):
@@ -106,7 +106,7 @@ def fasterrcnn_inference(img_path,model_path):
     test_loader = DataLoader(test_dataset, batch_size=1, shuffle=False)
 
     model=build_model(num_classes=2)
-    model.load_state_dict(torch.load(model_path))
+    model.load_state_dict(torch.load(model_path),map_location=device)
     model.eval()
 
     res_plotted = Image.open(img_path).convert("RGB")
