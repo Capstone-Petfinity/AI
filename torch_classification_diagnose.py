@@ -85,7 +85,7 @@ def efficientnet_inference(img_path, model_path, disease):
     test_loader = DataLoader(test_dataset, batch_size=1, shuffle=False, num_workers=0)
 
     model = BaseModel(num_classes=2)  # BaseModel을 인스턴스화
-    model.load_state_dict(torch.load(model_path, map_location=device))
+    model.load_state_dict(torch.load(model_path))
     model.eval()
 
     with torch.no_grad():

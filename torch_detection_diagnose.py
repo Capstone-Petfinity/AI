@@ -105,10 +105,10 @@ def fasterrcnn_inference(img_path,model_path):
     test_dataset = CustomDataset(img_path,transforms=get_test_transforms())
     test_loader = DataLoader(test_dataset, batch_size=1, shuffle=False)
 
-    model=torch.load(model_path)
+    model=build_model(num_classes=2)
+    model.load_state_dict(torch.load(model_path))
     model.eval()
 
-    
     res_plotted = Image.open(img_path).convert("RGB")
     res_plotted=res_plotted.resize((640,640), Image.Resampling.BILINEAR)
     boxes=inference(model, test_loader, device, threshold=0.6)

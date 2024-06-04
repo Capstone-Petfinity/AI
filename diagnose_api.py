@@ -125,6 +125,8 @@ def diagnose():
         # 기본 모델 설정
         model_path = "./yolo_models/skeletal/mu05(detection).pt"
 
+    logging.info(f"model path : {model_path}")
+    
     if not model_path:
         
         return "No model found for the given parameters", 400
@@ -135,26 +137,33 @@ def diagnose():
         res_plotted, detected_disease_name, confidence = efficientnet_inference(
             img_path, model_path, disease_name
         )
+        logging.info("efficientnet_inference returned !")
     elif "skin" in model_path:
         res_plotted, detected_disease_name, confidence = skin_classification_inference(
             img_path, model_path
         )
+        logging.info("skin_classification_inference returned !")
     elif "FasterRCNN" in model_path:
         res_plotted, detected_disease_name, confidence = fasterrcnn_inference(
             img_path, model_path
         )
+        logging.info("fasterrcnn_inference returned !")
+        
     elif "detection" in model_path:
         res_plotted, detected_disease_name, confidence = yolo_detection_inference(
             img_path, model_path
         )
+        logging.info("yolo_detection_inference returned !")
     elif "segmentation" in model_path:
         res_plotted, detected_disease_name, confidence = yolo_segmentation_inference(
             img_path, model_path, disease_name
         )
+        logging.info("yolo_segmentation_inference returned !")
     elif "classification" in model_path:
         res_plotted, detected_disease_name, confidence = yolo_classification_inference(
             img_path, model_path, (type=='US')
         )
+        logging.info("yolo_classification_inference returned !")
 
     res_plotted.save("./result_image.jpg", format="JPEG")
 
