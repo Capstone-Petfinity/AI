@@ -129,7 +129,7 @@ def fasterrcnn_inference(img_path,model_path):
             print( x1, y1, x2, y2, score )
             draw.rectangle([(x1, y1), (x2, y2)], outline="red", width=4)
             disease_name="결석"
-            res_plotted = add_text_to_image(res_plotted, f"{disease_name} {score:.2f}", position=(x1, y1-55), font_size=50)
+            res_plotted = add_text_to_image(res_plotted, f"{disease_name} {score:.2f}", position=(x1, y1-35), font_size=30)
     
     
     return res_plotted, disease_name, confidence
