@@ -16,8 +16,8 @@ import warnings
 
 warnings.filterwarnings(action="ignore")
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
+#device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device=torch.device("cpu")
 class BaseModel(nn.Module):
     def __init__(self, num_classes=2):
         super(BaseModel, self).__init__()
