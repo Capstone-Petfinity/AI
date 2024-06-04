@@ -164,7 +164,9 @@ def diagnose():
             img_path, model_path, (type=='US')
         )
         logging.info("yolo_classification_inference returned !")
-
+    else:
+        logging.info("Check Your Algorithm !")
+        
     res_plotted.save("./result_image.jpg", format="JPEG")
 
     files = {
